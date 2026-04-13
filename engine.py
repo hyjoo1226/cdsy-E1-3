@@ -33,3 +33,15 @@ def get_average_mac_time(pattern, filter_matrix_a, filter_matrix_b, iterations=5
     # 평균 시간: 전체 걸린 시간 / 반복 횟수 * 1000 (초 단위를 ms로 변환)
     avg_time_ms = ((end_time - start_time) / (iterations * 2)) * 1000
     return avg_time_ms
+
+# JSON의 'expected' 값을 엔진의 판정 결과(A, B)와 비교할 수 있도록 변환
+def normalize_label(expected_raw):
+    label = str(expected_raw).strip().lower()
+    
+    # 십자가 -> 필터 A
+    if label in ['cross', '+']:
+        return "Cross"
+    # X -> 필터 B
+    elif label in ['x']:
+        return "X"  
+    return "UNDECIDED"
