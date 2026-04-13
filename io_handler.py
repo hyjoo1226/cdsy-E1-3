@@ -9,6 +9,7 @@ def get_matrix_input(name, size=3):
             raw_input_data = input(f"{len(matrix) + 1}행: ").strip()
 
             if not raw_input_data:
+                print(f"각 줄에 {size}개의 숫자를 공백으로 구분해 입력해주세요.")
                 continue
 
             parsed_data = [float(x) for x in raw_input_data.split()]

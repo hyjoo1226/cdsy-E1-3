@@ -1,4 +1,4 @@
-from engine import calculate_mac
+from engine import calculate_mac, compare_scores, get_average_mac_time, EPSILON
 from io_handler import get_matrix_input
 
 # 모드 1: 사용자 입력 모드
@@ -15,13 +15,28 @@ def run_user_input_mode():
     print("-" * 30)
     pattern = get_matrix_input("패턴", 3)
     
-    # 2. 연산
+    # 연산
     score_a = calculate_mac(pattern, filter_a)
     score_b = calculate_mac(pattern, filter_b)
     
-    # 3. 판정 및 출력
+    # 판정
     result = compare_scores(score_a, score_b)
-    print_result(score_a, score_b, result)
+
+    # 시간 측정
+    avg_time = get_average_mac_time(pattern, filter_a, filter_b)
+
+    # 결과 출력
+    print("\n" + "-"*30)
+    print("# [3] MAC 결과")
+    print("-"*30)
+    print(f"A 점수: {score_a}")
+    print(f"B 점수: {score_b}")
+    print(f"연산 시간(평균/10회): {avg_time:.3f} ms")
+
+    if result == "UNDECIDED":
+        print(f"판정: 판정 불가 (|A-B| < {EPSILON})")
+    else:
+        print(f"판정: {result}")
 
 def main():
     print("=== Mini NPU Simulator ===")
@@ -39,11 +54,6 @@ def main():
         pass
     elif mode == "3":
         print("프로그램을 종료합니다.")
-    
-    # MAC 계산
-    score = calculate_mac(pattern, filter_matrix)
-    
-    print(f"MAC Score: {score}")
 
 if __name__ == "__main__":
     main()
