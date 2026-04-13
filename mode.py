@@ -1,6 +1,7 @@
 from engine import calculate_mac, compare_scores, get_average_mac_time, EPSILON
 from io_handler import get_matrix_input, get_int_input
 
+# 메인 메뉴
 def choice_menu():
     while True:
         print("=== Mini NPU Simulator ===")
