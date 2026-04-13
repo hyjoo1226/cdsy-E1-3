@@ -137,16 +137,36 @@ def run_data_analysis_mode():
                 reason = "불일치"
             failed_cases.append((key, reason))
 
+        print(f"Cross 점수: {score_cross:.16f}")
+        print(f"X 점수: {score_x:.16f}")
+        print(f"판정: {result} | expected: {expected} | {status}")
 
         # 시간 측정
         avg_time = get_average_mac_time(pattern_input, filter_cross, filter_x)
-        
-        # 결과 출력
-        print(f"{key:<12} | {size_str:<5} | {expected_filter:<8} | {pred:<9} | {status:<6} | {avg_time:.3f}")
+        if size_str not in time_stats:
+            time_stats[size_str] = []
+        time_stats[size_str].append(avg_time)
 
-    # 최종 정확도 출력    
-    accuracy = (correct_count / total_count) * 100
-    print("-" * 65)
-    print(f"총 처리 건수: {total_count}건")
-    print(f"최종 정확도  : {accuracy:.2f}% ({correct_count}/{total_count})")
-    print("=" * 65)
+        # 성능 분석
+        print("\n" + "#" + "-" * 39)
+        print("# [3] 성능 분석 (평균/10회)")
+        print("#" + "-" * 39)
+        print(f"{'크기':<7} {'평균 시간(ms)':<13} {'연산 횟수'}")
+        print("-" * 39)
+        
+        for s_int in sorted([int(s) for s in time_stats.keys()]):
+            s_str = str(s_int)
+            avg_val = sum(time_stats[s_str]) / len(time_stats[s_str])
+            print(f"{s_int}x{s_int:<5} {avg_val:<13.3f} {s_int*s_int}")
+
+    # [4] 결과 요약
+    print("\n" + "#" + "-" * 39)
+    print("# [4] 결과 요약")
+    print("#" + "-" * 39)
+    print(f"총 테스트: {total_tests}개")
+    print(f"통과: {passed_count}개")
+    print(f"실패: {len(failed_cases)}개")
+    if failed_cases:
+        print("실패 케이스:")
+        for c_id, res in failed_cases:
+            print(f"- {c_id}: {res}")
