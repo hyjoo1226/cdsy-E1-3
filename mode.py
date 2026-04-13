@@ -1,22 +1,24 @@
 from engine import calculate_mac, compare_scores, get_average_mac_time, EPSILON
-from io_handler import get_matrix_input
+from io_handler import get_matrix_input, get_int_input
 
 def choice_menu():
-    print("=== Mini NPU Simulator ===")
-    print("\n모드 선택:")
-    print("\n1. 사용자 입력 (3x3)")
-    print("2. data.json 분석")
-    print("3. 종료")
+    while True:
+        print("=== Mini NPU Simulator ===")
+        print("\n모드 선택:")
+        print("\n1. 사용자 입력 (3x3)")
+        print("2. data.json 분석")
+        print("3. 종료")
 
-    mode = input("선택: ")
+        mode = get_int_input("선택: ", 1, 3)
 
-    if mode == "1":
-        run_user_input_mode()
-    elif mode == "2":
-        # data.json 분석
-        pass
-    elif mode == "3":
-        print("프로그램을 종료합니다.")
+        if mode == 1:
+            run_user_input_mode()
+        elif mode == 2:
+            # data.json 분석
+            pass
+        elif mode == 3:
+            print("프로그램을 종료합니다.")
+            break
 
 # 모드 1: 사용자 입력 모드
 def run_user_input_mode():
