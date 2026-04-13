@@ -15,7 +15,7 @@ def run_user_input_mode():
     print("-" * 30)
     pattern = get_matrix_input("패턴", 3)
     
-    # 2. 연산 (engine 담당)
+    # 2. 연산
     score_a = calculate_mac(pattern, filter_a)
     score_b = calculate_mac(pattern, filter_b)
     
