@@ -51,3 +51,13 @@ def get_int_input(prompt, min_val, max_val):
 
         except ValueError:
             print("숫자를 입력해주세요.")
+
+# 행렬 출력 함수
+def print_matrix(matrix):
+    if not matrix:
+        print("입력된 행렬이 없습니다.")
+        return
+        
+    for row in matrix:
+        # 각 행(row)의 숫자들을 문자열로 바꾸고, 공백으로 연결하여 출력([1, 0, 1] -> "1 0 1")
+        print(" ".join(map(str, row)))

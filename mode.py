@@ -1,6 +1,6 @@
 import json
 from engine import calculate_mac, compare_scores, get_average_mac_time, normalize_label, EPSILON
-from io_handler import get_matrix_input, get_int_input
+from io_handler import get_matrix_input, get_int_input, print_matrix
 
 # 메인 메뉴
 def choice_menu():
@@ -31,6 +31,11 @@ def run_user_input_mode():
     filter_a = get_matrix_input("필터 A", 3)
     print("\n")
     filter_b = get_matrix_input("필터 B", 3)
+    print("\n[입력 확인] 필터 A가 다음과 같이 입력되었습니다:")
+    print_matrix(filter_a)
+    print("\n[입력 확인] 필터 B가 다음과 같이 입력되었습니다:")
+    print_matrix(filter_b)
+    print("-" * 20)
     print("#" + "-" * 30)
     print("#[2] 패턴 입력")
     print("#" + "-" * 30)
