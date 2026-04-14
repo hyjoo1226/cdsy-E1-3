@@ -35,7 +35,7 @@ def get_average_mac_time(pattern, filter_matrix_a, filter_matrix_b, iterations=5
     avg_time_ms = ((end_time - start_time) / (iterations * 2)) * 1000
     return avg_time_ms
 
-# JSON의 'expected' 값을 표준 라벨로 정규화
+# 표준 라벨로 정규화
 def normalize_label(expected_raw):
     label = str(expected_raw).strip().lower()
     
