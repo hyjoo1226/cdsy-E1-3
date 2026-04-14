@@ -38,7 +38,6 @@ python main.py
 ### 파일 구조
 ```
 📦 cdsy-E1-3
- ┣ 📦 docs           # 개발문서, 스크린샷 등 폴더
  ┣ 📜 main.py        # 프로그램 실행 진입점
  ┣ 📜 mode.py        # 모드 선택
  ┣ 📜 engine.py      # MAC 연산
