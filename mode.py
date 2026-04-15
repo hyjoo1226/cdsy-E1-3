@@ -142,13 +142,18 @@ def run_data_analysis_mode():
         x_r = len(filter_x)
         x_c = len(filter_x[0]) if x_r > 0 else False
 
-        size_mismatch = (pattern_rows != cross_r or pattern_cols != cross_c)
-        x_mismatch = (pattern_rows != x_r or pattern_cols != x_c)
+        # 패턴 행별 열 수
         row_mismatch = any(len(row) != pattern_cols for row in pattern_input)
+
+        # 필터 행별 열 수
         cross_row_mismatch = filter_cross and any(len(row) != cross_c for row in filter_cross)
         x_row_mismatch = filter_x and any(len(row) != x_c for row in filter_x)
 
-        if row_mismatch or cross_row_mismatch or x_row_mismatch or size_mismatch or x_mismatch:
+        # 행렬 가로/세로 전체 크기
+        cross_mismatch = (pattern_rows != cross_r or pattern_cols != cross_c)
+        x_mismatch = (pattern_rows != x_r or pattern_cols != x_c)
+
+        if row_mismatch or cross_row_mismatch or x_row_mismatch or cross_mismatch or x_mismatch:
             expected = normalize_label(value["expected"])
             if row_mismatch:
                 reason = f"패턴 행별 열 수 불일치 ({[len(r) for r in pattern_input]})"
@@ -156,7 +161,7 @@ def run_data_analysis_mode():
                 reason = f"Cross 필터 행별 열 수 불일치 ({[len(r) for r in filter_cross]})"
             elif x_row_mismatch:
                 reason = f"X 필터 행별 열 수 불일치 ({[len(r) for r in filter_x]})"
-            elif size_mismatch:
+            elif cross_mismatch:
                 reason = f"크기 불일치 (패턴:{pattern_rows}x{pattern_cols}, Cross필터:{cross_r}x{cross_c})"
             else:
                 reason = f"크기 불일치 (패턴:{pattern_rows}x{pattern_cols}, X필터:{x_r}x{x_c})"
