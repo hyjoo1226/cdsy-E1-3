@@ -3,6 +3,9 @@
 ## 프로젝트 개요
 뇌의 신경세포인 '뉴런'은 들어온 모든 입력값에 각각의 가중치를 곱하고, 그 결과들을 전부 더합니다. 이후 약간의 보정 값(편향, bias)을 더해줍니다.
 <br>
+<br>
+입력값: [x1, x2, x3 ...], 가중치: [w1, w2, w3 ...]
+<br>
 뉴런 결과 = (x1*w1) + (x2*w2) + (x3*w3) + ... + (bias)
 <br>
 <br>
@@ -67,15 +70,15 @@ python main.py
 [코드]
 ```
 # 표준 라벨로 정규화
-def normalize_label(expected_raw):
+def normalize_label(prev_label):
     # 1. 문자열로 변환 후, 양 끝 공백 제거 및 소문자 통일
-    label = str(expected_raw).strip().lower()
+    label = str(prev_label).strip().lower()
     
     # 2. '십자가' 패턴에 해당하는 라벨들을 "Cross"로 통일
-    if label in ['cross', '+', 'cross']: # 'Cross'는 소문자화되어 'cross'가 됨
+    if label in ['cross', '+']:
         return "Cross"
     # 3. 'X' 패턴에 해당하는 라벨들을 "X"로 통일
-    elif label in ['x']: # 'X'는 소문자화되어 'x'가 됨
+    elif label in ['x']:
         return "X"
     
     # 4. 위 규칙에 해당하지 않으면 "UNDECIDED"로 처리
@@ -155,7 +158,6 @@ ex) 0.1 (10진수) = 0.0001100110011... (2진수)
 
 [코드]
 ```
-# 표준 라벨로 정규화
 # 허용 오차 설정 (1e-9: 0.000000001)
 EPSILON = 1e-9
 

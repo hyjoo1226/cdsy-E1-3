@@ -36,13 +36,13 @@ def get_average_mac_time(pattern, filter_matrix_a, filter_matrix_b, iterations=5
     return avg_time_ms
 
 # 표준 라벨로 정규화
-def normalize_label(expected_raw):
-    label = str(expected_raw).strip().lower()
+def normalize_label(prev_label):
+    label = str(prev_label).strip().lower()
     
     # 십자가
-    if label in ['cross', '+', 'Cross']:
+    if label in ['cross', '+']:
         return "Cross"
     # X
-    elif label in ['x', 'X']:
+    elif label in ['x']:
         return "X"  
     return "UNDECIDED"

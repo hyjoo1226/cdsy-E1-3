@@ -69,6 +69,15 @@ def run_user_input_mode():
         print(f"판정: {result}")
     print("\n")
 
+    # 성능 분석 표
+    print("\n#" + "-"*30)
+    print("# [4] 성능 분석 (평균/10회)")
+    print("#" + "-"*30)
+    print(f"{'크기':<7} {'평균 시간(ms)':<13} {'연산 횟수'}")
+    print("-" * 39)
+    print(f"{'3x3':<11} {avg_time:<16.3f} {3*3}")
+    print("\n")
+
 # 모드 2: data.json 분석 모드
 def run_data_analysis_mode():
     # 파일 읽기, 예외 처리
@@ -122,6 +131,32 @@ def run_data_analysis_mode():
                 filter_x = v
         
         pattern_input = value["input"]
+
+        # 크기 불일치 검증
+        pattern_rows = len(pattern_input)
+        pattern_cols = len(pattern_input[0]) if pattern_rows > 0 else False
+
+        cross_r = len(filter_cross)
+        cross_c = len(filter_cross[0]) if cross_r > 0 else False
+
+        x_r = len(filter_x)
+        x_c = len(filter_x[0]) if x_r > 0 else False
+
+        cross_mismatch = (pattern_rows != cross_r or pattern_cols != cross_c)
+        x_mismatch = (pattern_rows != x_r or pattern_cols != x_c)
+        row_mismatch = any(len(row) != pattern_cols for row in pattern_input)
+
+        if row_mismatch or cross_mismatch or x_mismatch:
+            expected = normalize_label(value["expected"])
+            if row_mismatch:
+                reason = f"패턴 행별 열 수 불일치 ({[len(r) for r in pattern_input]})"
+            elif cross_mismatch:
+                reason = f"크기 불일치 (패턴:{pattern_rows}x{pattern_cols}, Cross필터:{cross_r}x{cross_c})"
+            else:
+                reason = f"크기 불일치 (패턴:{pattern_rows}x{pattern_cols}, X필터:{x_r}x{x_c})"
+            print(f"판정: ERROR | expected: {expected} | FAIL (데이터 오류)")
+            failed_cases.append((key, reason))
+            continue
         
         # 연산
         score_cross = calculate_mac(pattern_input, filter_cross)
